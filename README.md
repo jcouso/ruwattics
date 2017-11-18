@@ -1,6 +1,6 @@
 # Ruwattics
 
-API client side that connection with Wattics plataform. You can send simple measuarements or eletric measurements.
+API client side that connection with Wattics plataform. You can send simple measuarements or electric measurements.
 
 ## Installation
 You will need a local copy of the files, download them from this repository.
