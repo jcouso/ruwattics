@@ -3,7 +3,7 @@
 API client side that connection with Wattics plataform. You can send simple measuarements or eletric measurements.
 
 ## Installation
-You will need a local copy of the file, download all files from this repository.
+You will need a local copy of the files, download them from this repository.
 
 ```sh
 $ git clone https://github.com/jcouso/ruwattics
@@ -30,7 +30,7 @@ electricMensurment.id = "meter-id-02"
 electricMensurment.setTimeNow
 electricMensurment.activePowerPhaseA = 5.12
 electricMensurment.reactivePowerPhaseA = 1.5
-#/
+# ...
 
 Sender.send(electricMensurment, user)
 ```
@@ -39,8 +39,8 @@ Sender.send(electricMensurment, user)
 
 You may run the test using the following command, remember to update the global variables of username and password at the top of the file ruwattics_spec.rb to valid ones before running the testes.
 
-```ruby
-rake spec
+```sh
+$ rake spec
 ```
 
 
