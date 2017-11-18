@@ -7,6 +7,7 @@ You will need a local copy of the files, download them from this repository.
 
 ```sh
 $ git clone https://github.com/jcouso/ruwattics
+$ cd ruwattics
 $ gem build ruwattics.gemspec
 $ gem install ruwattics
 ```
