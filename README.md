@@ -16,7 +16,7 @@ $ gem install ruwattics
 Here is some basic commands to get you started with the ruwattics API
 
 ```ruby
-require 'ruwattics.rb'
+require 'ruwattics'
 
 user = User.new(:DEVELOPMENT, username, password)
 
