@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["juan.couso@gmail.com"]
 
   spec.summary       = "This gem connects with Wattics API  }"
-  spec.description   = "The gem connects with the wattics API to send over data from sensors}"
+  spec.description   = "The gem connects with the wattics API to send over data to the wattics plataform}"
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
 

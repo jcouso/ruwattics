@@ -1,5 +1,8 @@
 require 'ruwattics'
 
+USERNAME = 'username'
+PASSWORD = 'password'
+
 RSpec.describe SimpleMeasurement do
   context "with correct attributes" do
     it "should have have an id attribute" do
@@ -65,7 +68,7 @@ end
 
 RSpec.describe ElectricityMeasurement do
   context "with correct attributes" do
-    it "should have have all all attributes" do
+    it "should have have all attributes of electric measuaments" do
       em = ElectricityMeasurement.new
       em.id = "meter-101"
       em.timestamp = '2017-11-15T23:00:49.420-02:00'
@@ -103,7 +106,7 @@ RSpec.describe ElectricityMeasurement do
   end
 
   context "works with valid inputs" do
-    it "should be a string for id and timestamp and numberic for electric mesuaments" do
+    it "should be a string for id and timestamp and numberic for electric measuaments" do
       em = ElectricityMeasurement.new
       em.id = "meter-101"
       em.timestamp = '2017-11-15T23:00:49.420-02:00'
@@ -219,7 +222,7 @@ RSpec.describe Sender do
       sm.id = "meter-101"
       sm.setTimeNow
       sm.value = rand*100
-      u = User.new(:DEVELOPMENT, 'username', 'password')
+      u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
       expect(Sender.send(sm, u)).to be_equal 200
     end
 
@@ -229,7 +232,7 @@ RSpec.describe Sender do
       100.times {
         sm.setTimeNow
         sm.value = rand*100
-        u = User.new(:DEVELOPMENT, 'username', 'password')
+        u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
         expect(Sender.send(sm, u)).to be_equal 200
       }
     end

@@ -1,23 +1,15 @@
 # Ruwattics
 
-API client side for connection with Wattics
+API client side that connection with Wattics plataform. You can send simple measuarements or eletric measurements.
 
 ## Installation
+You will need a local copy of the file, download all files from this repository.
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'ruwattics'
+```sh
+$ git clone https://github.com/jcouso/ruwattics
+$ gem build ruwattics.gemspec
+$ gem install ruwattics
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install ruwattics
-
 ## Usage
 
 Here is some basic commands to get you started with the ruwattics API
@@ -25,13 +17,13 @@ Here is some basic commands to get you started with the ruwattics API
 ```ruby
 require 'ruwattics.rb'
 
-config = User.new(:DEVELOPMENT, username, password)
+user = User.new(:DEVELOPMENT, username, password)
 
 simple = SimpleMeasurement.new
 simple.id = "meter-id-01"
 simple.setTimeNow
 simple.value = 12.5
-Sender.send(simple, config)
+Sender.send(simple, user)
 
 electricMensurment = ElectricityMeasurement.new
 electricMensurment.id = "meter-id-02"
@@ -40,12 +32,16 @@ electricMensurment.activePowerPhaseA = 5.12
 electricMensurment.reactivePowerPhaseA = 1.5
 #/
 
-Sender.send(electricMensurment, config)
+Sender.send(electricMensurment, user)
 ```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests.
+You may run the test using the following command, remember to update the global variables of username and password at the top of the file ruwattics_spec.rb to valid ones before running the testes.
+
+```ruby
+rake spec
+```
 
 
 ## License
