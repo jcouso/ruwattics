@@ -36,7 +36,7 @@ electricMensurment.reactivePowerPhaseA = 1.5
 Sender.send(electricMensurment, user)
 ```
 
-## Development
+## Testing
 
 You may run the test using the following command, remember to update the global variables of username and password at the top of the file ruwattics_spec.rb to valid ones before running the testes.
 
