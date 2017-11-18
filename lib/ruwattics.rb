@@ -3,6 +3,7 @@ require 'json'
 require 'time'
 
 class User
+  #This class sets-up user's enviorment and credentials
   attr_accessor :username, :password
   attr_reader :url
   def initialize(type, username, password)
@@ -18,6 +19,7 @@ class User
 end
 
 class Sender
+  #this class send the data over, it will either return with "200" as successful or the error response recieved from the server
   def self.send(measurement, user)
     begin
       response = RestClient::Request.execute(method: :post, url: user.url,
@@ -34,6 +36,8 @@ class Sender
 end
 
 class SimpleMeasurement
+  #This class handles the simple measuarement values, it has a setTimeNow function to set the current time.
+  #payload returns a hash in a correct manner, excluding empty atributes
   attr_accessor :id, :timestamp, :value
   def setTimeNow
     @timestamp = Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
@@ -55,6 +59,8 @@ end
 
 
 class ElectricityMeasurement
+  #This class handles the eletric measurement values, it has a setTimeNow function to set the current time.
+  #payload returns a hash in a correct manner, excluding empty atributes
   attr_accessor :id, :timestamp, :activePowerPhaseA, :activePowerPhaseB,
                   :activePowerPhaseC, :reactivePowerPhaseA, :reactivePowerPhaseB,
                   :reactivePowerPhaseC, :apparentPowerPhaseA, :apparentPowerPhaseB,
