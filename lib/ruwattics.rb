@@ -32,8 +32,9 @@ class Sender
                           user: @user.username, password: @user.password,
                           payload: @measurement.payload.to_json
         )
-      puts "Request was performed successfully."
+      puts @measurement.payload.to_json
       puts response.code
+      response.code
     rescue RestClient::ExceptionWithResponse => e
       puts e.response
       puts "Error in sending request"
