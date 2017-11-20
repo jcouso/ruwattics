@@ -13,18 +13,18 @@ $ gem install ruwattics
 ```
 ## Usage
 
-Here is some basic commands to get you started with the ruwattics API
+Here is some basic commands to get you started with the ruwattics API. Remember use a valid username and password.
 
 ```ruby
 require 'ruwattics'
 
-user = User.new(:DEVELOPMENT, username, password)
+user = User.new(:DEVELOPMENT, 'username', 'password')
 
 simple = SimpleMeasurement.new
 simple.id = "meter-id-01"
 simple.setTimeNow
 simple.value = 12.5
-Sender.send(simple, user)
+Agent.send(simple, user)
 
 electricMensurment = ElectricityMeasurement.new
 electricMensurment.id = "meter-id-02"
@@ -33,7 +33,7 @@ electricMensurment.activePowerPhaseA = 5.12
 electricMensurment.reactivePowerPhaseA = 1.5
 # ...
 
-Sender.send(electricMensurment, user)
+Agent.send(electricMensurment, user)
 ```
 
 ## Testing

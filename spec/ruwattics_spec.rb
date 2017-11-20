@@ -223,7 +223,7 @@ RSpec.describe Sender do
       sm.setTimeNow
       sm.value = rand*100
       u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
-      expect(Sender.send(sm, u)).to be_equal 200
+      expect(Agent.send(sm, u)).to be_equal 200
     end
 
     it "should return 200 when sending a 100 simple measurements" do
@@ -233,7 +233,7 @@ RSpec.describe Sender do
         sm.setTimeNow
         sm.value = rand*100
         u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
-        expect(Sender.send(sm, u)).to be_equal 200
+        expect(Agent.send(sm, u)).to be_equal 200
       }
     end
   end

@@ -1,4 +1,5 @@
 require 'rest-client'
+require 'thread'
 require 'json'
 require 'time'
 
@@ -20,20 +21,66 @@ end
 
 class Sender
   #this class send the data over, it will either return with "200" as successful or the error response recieved from the server
-  def self.send(measurement, user)
+  def initialize(measurement, user)
+    @measurement = measurement
+    @user = user
+  end
+
+  def sender
     begin
-      response = RestClient::Request.execute(method: :post, url: user.url,
-                          user: user.username, password: user.password,
-                          payload: measurement.payload.to_json
+      response = RestClient::Request.execute(method: :post, url: @user.url,
+                          user: @user.username, password: @user.password,
+                          payload: @measurement.payload.to_json
         )
-        #"Request was performed successfully."
-      response.code
+      puts "Request was performed successfully."
+      puts response.code
     rescue RestClient::ExceptionWithResponse => e
-        e.response
-        #"Error in sending request"
+      puts e.response
+      puts "Error in sending request"
     end
   end
 end
+
+class Worker
+  def initialize(queue)
+    @thread = Thread.new { poll(queue) }
+  end
+
+  def poll(queue)
+    until done?
+      begin
+        queue.pop(true).call
+      rescue ThreadError
+        # queue was empty
+        sleep 1
+      end
+    end
+    exit 0
+  end
+
+  def done?
+    @done
+  end
+
+  def shut_down
+    @done = true
+  end
+end
+
+class Agent
+  @queue = Queue.new
+  @workers = []
+  50.times do
+    @workers << Worker.new(@queue)
+  end
+
+  def self.send(measurement, user)
+    data = Sender.new(measurement, user)
+    @queue << Proc.new { data.sender }
+     sleep 0.001 until @queue.empty?
+  end
+end
+
 
 class SimpleMeasurement
   #This class handles the simple measuarement values, it has a setTimeNow function to set the current time.
