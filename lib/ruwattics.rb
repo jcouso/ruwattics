@@ -32,12 +32,9 @@ class Sender
                           user: @user.username, password: @user.password,
                           payload: @measurement.payload.to_json
         )
-      puts @measurement.payload.to_json
-      puts response.code
-      response.code
+      puts [@measurement.payload.to_json, response.code]
     rescue RestClient::ExceptionWithResponse => e
-      puts e.response
-      puts "Error in sending request"
+      puts [@measurement.payload.to_json, e.response.code]
     end
   end
 end
@@ -63,9 +60,9 @@ class Worker
     @done
   end
 
-  def shut_down
-    @done = true
-  end
+  # def shut_down
+  #   @done = true
+  # end
 end
 
 class Agent

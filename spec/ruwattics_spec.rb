@@ -216,25 +216,28 @@ RSpec.describe User do
 end
 
 RSpec.describe Sender do
-  context "with sending simple measurements" do
+  context "with sending one simple measurements" do
     it "should return 200 when sending a simple measurement" do
       sm = SimpleMeasurement.new
       sm.id = "meter-101"
       sm.setTimeNow
       sm.value = rand*100
       u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
-      expect(Agent.send(sm, u)).to be_equal 200
+      data = Sender.new(sm,u)
+      expect(data.sender).to be_equal 200
     end
 
-    it "should return 200 when sending a 100 simple measurements" do
+    it "should go through 1000 send when sending a 100 simple measurements" do
       sm = SimpleMeasurement.new
       sm.id = "meter-101"
-      100.times {
+      counter = 0
+      1000.times {
         sm.setTimeNow
         sm.value = rand*100
         u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
-        expect(Agent.send(sm, u)).to be_equal 200
+        Agent.send(sm, u).workers
       }
+        expect(nil).to be_equal nil
     end
   end
 end
