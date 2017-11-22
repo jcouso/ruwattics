@@ -75,7 +75,9 @@ class Agent
   def self.send(measurement, user)
     data = Sender.new(measurement, user)
     @queue << Proc.new { data.sender }
-     sleep 0.001 until @queue.empty?
+     loop do
+      break if @queue.empty?
+    end
   end
 end
 
