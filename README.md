@@ -36,10 +36,10 @@ electricMensurment.reactivePowerPhaseA = 1.5
 agent.send(electricMensurment, user)
 ```
 
-You may later access the results using the following command.
+You may later access the results of sending the data using the following command.
 
 ```ruby
-agent.results
+agent.result
 ```
 
 ## Testing
