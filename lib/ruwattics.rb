@@ -32,9 +32,9 @@ class Sender
                           user: @user.username, password: @user.password,
                           payload: @measurement.payload.to_json
         )
-      response.code
+      [response.code, @measurement]
     rescue RestClient::ExceptionWithResponse => e
-      e.response.code
+      [e.response.code, @measurement]
     end
   end
 end
