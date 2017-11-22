@@ -32,9 +32,9 @@ class Sender
                           user: @user.username, password: @user.password,
                           payload: @measurement.payload.to_json
         )
-      puts [@measurement.payload.to_json, response.code]
+      response.code
     rescue RestClient::ExceptionWithResponse => e
-      puts [@measurement.payload.to_json, e.response.code]
+      e.response.code
     end
   end
 end
@@ -50,7 +50,7 @@ class Worker
         queue.pop(true).call
       rescue ThreadError
         # queue was empty
-        sleep 1
+        sleep 0.01
       end
     end
     exit 0
@@ -60,24 +60,23 @@ class Worker
     @done
   end
 
-  # def shut_down
-  #   @done = true
-  # end
 end
 
 class Agent
-  @queue = Queue.new
-  @workers = []
-  50.times do
-    @workers << Worker.new(@queue)
+  attr_reader :result
+  def initialize
+    @result = []
+    @queue = Queue.new
+    @workers = []
+    75.times do
+      @workers << Worker.new(@queue)
+    end
   end
 
-  def self.send(measurement, user)
+  def send(measurement, user)
     data = Sender.new(measurement, user)
-    @queue << Proc.new { data.sender }
-     loop do
-      break if @queue.empty?
-    end
+    @queue << Proc.new { @result << data.sender }
+    sleep 0.01 until @queue.empty?
   end
 end
 

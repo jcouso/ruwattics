@@ -8,7 +8,6 @@ You will need a local copy of the files, download them from this repository.
 ```sh
 $ git clone https://github.com/jcouso/ruwattics
 $ cd ruwattics
-$ gem build ruwattics.gemspec
 $ gem install ruwattics
 ```
 ## Usage
@@ -19,12 +18,13 @@ Here is some basic commands to get you started with the ruwattics API. Remember 
 require 'ruwattics'
 
 user = User.new(:DEVELOPMENT, 'username', 'password')
+agent = Agent.new
 
 simple = SimpleMeasurement.new
 simple.id = "meter-id-01"
 simple.setTimeNow
 simple.value = 12.5
-Agent.send(simple, user)
+agent.send(simple, user)
 
 electricMensurment = ElectricityMeasurement.new
 electricMensurment.id = "meter-id-02"
@@ -33,12 +33,12 @@ electricMensurment.activePowerPhaseA = 5.12
 electricMensurment.reactivePowerPhaseA = 1.5
 # ...
 
-Agent.send(electricMensurment, user)
+agent.send(electricMensurment, user)
 ```
 
 ## Testing
 
-You may run the test using the following command, remember to update the global variables of username and password at the top of the file ruwattics_spec.rb to valid ones before running the tests.
+You may run the test using the following command.
 
 ```sh
 $ rake spec
