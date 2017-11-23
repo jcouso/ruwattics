@@ -4,7 +4,7 @@ require 'json'
 require 'time'
 
 class User
-  #This class sets-up user's enviorment and credentials
+  #sets-up user's enviorment and credentials
   attr_accessor :username, :password
   attr_reader :url
   def initialize(type, username, password)
@@ -20,7 +20,7 @@ class User
 end
 
 class Sender
-  #this class send the data over, it will either return with "200" as successful or the error response recieved from the server
+  #it will send the data over, it will return an array with the mesuarement and response.
   def initialize(measurement, user)
     @measurement = measurement
     @user = user
@@ -30,16 +30,17 @@ class Sender
     begin
       response = RestClient::Request.execute(method: :post, url: @user.url,
                           user: @user.username, password: @user.password,
-                          payload: @measurement.payload.to_json
-        )
+                          payload: @measurement.payload.to_json, timeout: 2
+                          )
       [@measurement, response.code]
     rescue RestClient::ExceptionWithResponse => e
-      [@measurement, e.response.code]
+      response == nil ? [measurement, 'timeout'] : [response.code, measurement]
     end
   end
 end
 
 class Worker
+# responsable for poping jobs out of the queue.
   def initialize(queue)
     @thread = Thread.new { poll(queue) }
   end
@@ -63,6 +64,7 @@ class Worker
 end
 
 class Agent
+  #it set ups workers and handles new jobs to the quenue
   attr_reader :result
   def initialize
     @result = []
@@ -82,7 +84,7 @@ end
 
 
 class SimpleMeasurement
-  #This class handles the simple measuarement values, it has a setTimeNow function to set the current time.
+  #it handles the simple measuarement values, it has a setTimeNow function to set the current time.
   #payload returns a hash in a correct manner, excluding empty atributes
   attr_accessor :id, :timestamp, :value
   def setTimeNow
