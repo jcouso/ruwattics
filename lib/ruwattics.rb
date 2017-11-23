@@ -34,7 +34,7 @@ class Sender
                           )
       [@measurement, response.code]
     rescue RestClient::ExceptionWithResponse => e
-      response == nil ? [measurement, 'timeout'] : [response.code, measurement]
+      response == nil ? [@measurement, 'timeout'] : [@measurement, response.code]
     end
   end
 end

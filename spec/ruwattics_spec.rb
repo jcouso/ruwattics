@@ -215,29 +215,54 @@ RSpec.describe User do
   end
 end
 
-RSpec.describe Sender do
-  context "with sending simple measurements" do
-    # it "should return 200 when sending a simple measurement" do
-    #   sm = SimpleMeasurement.new
-    #   sm.id = "meter-101"
-    #   sm.setTimeNow
-    #   sm.value = rand*100
-    #   u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
-    #   data = Sender.new(sm,u)
-    #   expect(data.sender).to be_equal 200
-    # end
+RSpec.describe Agent do
+  context "with sending 1000 measurements" do
 
     it "should send 1000 simple measurements" do
-      sm = SimpleMeasurement.new
-      sm.id = "meter-101"
       agent = Agent.new
       u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
       1000.times {
+        sm = SimpleMeasurement.new
+        sm.id = "meter-" + rand(1..100).to_s
         sm.setTimeNow
         sm.value = rand*100
         agent.send(sm, u)
       }
-      sleep 2.5
+      sleep 1 until agent.result.count == 1000
+      expect(agent.result.count).to be_equal 1000
+    end
+
+    it "should send 1000 Electric measurements" do
+      agent = Agent.new
+      u = User.new(:DEVELOPMENT, USERNAME, PASSWORD)
+      1000.times {
+        em = ElectricityMeasurement.new
+        em.id = "meter-" + rand(1..100).to_s
+        em.setTimeNow
+        em.activePowerPhaseA = rand*100
+        em.activePowerPhaseB = rand*100
+        em.activePowerPhaseC = rand*100
+        em.reactivePowerPhaseA = rand*100
+        em.reactivePowerPhaseB = rand*100
+        em.reactivePowerPhaseC = rand*100
+        em.apparentPowerPhaseA = rand*100
+        em.apparentPowerPhaseB = rand*100
+        em.apparentPowerPhaseC = rand*100
+        em.voltagePhaseA = rand*100
+        em.voltagePhaseB = rand*100
+        em.voltagePhaseC = rand*100
+        em.currentPhaseA = rand*100
+        em.currentPhaseB = rand*100
+        em.currentPhaseC = rand*100
+        em.activeEnergyPhaseA = rand*100
+        em.activeEnergyPhaseB = rand*100
+        em.activeEnergyPhaseC = rand*100
+        em.lineToLineVoltagePhaseAB = rand*100
+        em.lineToLineVoltagePhaseBC = rand*100
+        em.lineToLineVoltagePhaseAC = rand*100
+        agent.send(em, u)
+      }
+      sleep 3
       expect(agent.result.count).to be_equal 1000
     end
   end
