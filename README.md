@@ -12,7 +12,7 @@ $ gem install ruwattics
 ```
 ## Usage
 
-Here is some basic commands to get you started with the ruwattics API. Remember use a valid username and password.
+Here is some basic commands to get you started with the ruwattics API. Remember to use a valid username and password.
 
 ```ruby
 require 'ruwattics'
@@ -36,7 +36,7 @@ electricMensurment.reactivePowerPhaseA = 1.5
 agent.send(electricMensurment, user)
 ```
 
-You may later access the results of sending the data using the following command.
+You may later access the results using the following command.
 
 ```ruby
 agent.result
